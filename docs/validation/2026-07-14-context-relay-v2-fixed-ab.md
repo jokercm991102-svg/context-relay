@@ -125,3 +125,9 @@ The local marketplace and installed Plugin were exercised through the official C
 - Raw transcript or session JSONL requested or read in beginner flow: no
 - Private absolute paths or transcript text shown to the beginner: no; only a home-relative location was shown
 - Additional fail-closed observation: an unwritable default output in a projectless sandbox returned exit `2`; retrying with a safe writable output outside the target repository succeeded
+
+## Public GitHub acceptance
+
+The initial public release commit `80cd3ca43217f320401e435c80b1449309def7d2` was published to the public `main` branch at `https://github.com/jokercm991102-svg/context-relay`. A fresh isolated `CODEX_HOME` contained no configured marketplaces before the test. The documented commands then added `jokercm991102-svg/context-relay` at `main` and installed `context-relay@context-relay` as version `0.1.0`, enabled.
+
+The installed GitHub-sourced Plugin passed the Plugin validator. Its installed beginner wrapper created exactly the five documented handoff files from an explicitly confirmed objective and next step. The target branch, HEAD, and raw porcelain status were unchanged. Resuming from that still-trusted local bundle returned exit `0` with `verification: state-match`. This verifies public-source installation and the local create/resume path for this release candidate; it does not authenticate shared bundle provenance or prove a general reduction in model latency.
