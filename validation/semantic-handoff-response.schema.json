@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "objective",
+    "objective_elements",
+    "requires_goal_question",
+    "confirmation_target",
+    "confirmation_status",
+    "next_safe_action",
+    "unknowns"
+  ],
+  "properties": {
+    "objective": {"type": "string"},
+    "objective_elements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature", "validation", "comparison"],
+      "properties": {
+        "feature": {"type": "boolean"},
+        "validation": {"type": "boolean"},
+        "comparison": {"type": "boolean"}
+      }
+    },
+    "requires_goal_question": {"type": "boolean"},
+    "confirmation_target": {"type": ["string", "null"]},
+    "confirmation_status": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "acknowledged",
+        "ambiguous",
+        "unconfirmed",
+        "unknown"
+      ]
+    },
+    "next_safe_action": {"type": "string"},
+    "unknowns": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

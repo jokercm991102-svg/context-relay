@@ -1,0 +1,20 @@
+{
+  "name": "context-relay",
+  "interface": {
+    "displayName": "Context Relay"
+  },
+  "plugins": [
+    {
+      "name": "context-relay",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
