@@ -339,7 +339,7 @@ class PluginPackageTests(TestCase):
             payload,
             {
                 "name": "context-relay",
-                "version": "0.1.0",
+                "version": "0.1.1",
                 "description": (
                     "Create a local, read-only Codex project handoff and compare "
                     "recorded project state before resuming."
@@ -368,6 +368,9 @@ class PluginPackageTests(TestCase):
                     "developerName": "Context Relay Contributors",
                     "category": "Productivity",
                     "capabilities": ["Interactive"],
+                    "websiteURL": (
+                        "https://github.com/jokercm991102-svg/context-relay"
+                    ),
                     "defaultPrompt": [
                         "This task is getting long. Confirm the current objective "
                         "and prepare a handoff."
