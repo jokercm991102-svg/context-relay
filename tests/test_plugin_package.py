@@ -253,6 +253,39 @@ class PluginPackageTests(TestCase):
             with self.subTest(forbidden=phrase):
                 self.assertNotIn(phrase.casefold(), skill.casefold())
 
+    def test_create_exit_results_have_explicit_terminal_statuses(self):
+        skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        create = skill.split("## Create", 1)[1].split("## Resume", 1)[0]
+
+        with self.subTest(exit_code="0"):
+            self.assertIn(
+                (
+                    "On exit `0`, show Step 4 of 4 — Complete. Rely on the "
+                    "wrapper's sanitized output."
+                ),
+                create,
+            )
+            self.assertIn(
+                "The wrapper sanitizes successful output:",
+                create,
+            )
+
+        with self.subTest(exit_code="2"):
+            self.assertIn(
+                "On exit `2`, show Stopped. Explain the single safe correction. "
+                "Context Relay is not continuing execution.",
+                create,
+            )
+
+        with self.subTest(exit_code="3"):
+            self.assertIn(
+                "On exit `3`, show Stopped. State that the result is stale and "
+                "do not hand it off. Context Relay is not continuing execution.",
+                create,
+            )
+
     def test_readme_explains_visible_confirmation_workflow(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         required = (
