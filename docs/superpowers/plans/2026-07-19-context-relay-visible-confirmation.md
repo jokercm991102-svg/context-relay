@@ -349,7 +349,7 @@ Run:
 
 ```bash
 PYTHONPATH=/private/tmp/context-relay-validator-deps \
-python3 /Users/a1-6/.codex/skills/.system/skill-creator/scripts/quick_validate.py \
+python3 "$HOME/.codex/skills/.system/skill-creator/scripts/quick_validate.py" \
 skills/context-relay
 ```
 
@@ -361,7 +361,7 @@ Run:
 
 ```bash
 PYTHONPATH=/private/tmp/context-relay-validator-deps \
-python3 /Users/a1-6/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
+python3 "$HOME/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py" .
 ```
 
 Expected: output begins with `Plugin validation passed:` and names this repository root.
@@ -382,7 +382,7 @@ Expected: `git diff --check` prints nothing; status shows `main` ahead only by t
 Run:
 
 ```bash
-rg -n "T[B]D|T[O]DO|\[T[O]DO:|/Users/|0\.1\.1" \
+rg -n "T[B]D|T[O]DO|\[T[O]DO:|0\.1\.1" \
   .codex-plugin/plugin.json \
   .agents/plugins/marketplace.json \
   skills/context-relay/SKILL.md \
