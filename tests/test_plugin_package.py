@@ -254,6 +254,22 @@ class PluginPackageTests(TestCase):
             with self.subTest(forbidden=phrase):
                 self.assertNotIn(phrase.casefold(), skill.casefold())
 
+    def test_readme_explains_visible_confirmation_workflow(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        required = (
+            "Create has 4 steps; steps 1 and 2 require your confirmation.",
+            "Resume has 3 steps; step 1 requires your confirmation.",
+            "Confirmation required",
+            "Confirmation complete — Running",
+            "Create 共 4 个步骤，第 1、2 步需要你确认。",
+            "Resume 共 3 个步骤，第 1 步需要你确认。",
+            "需要确认",
+            "确认部分已完成｜执行中",
+        )
+        for phrase in required:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.casefold(), readme.casefold())
+
     def test_skill_contract_locks_normative_safety_semantics(self):
         skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
             encoding="utf-8"

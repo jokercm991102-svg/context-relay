@@ -12,6 +12,15 @@ Context Relay is for people who start with a rough software idea, learn from eac
 
 You do not need to find a session JSONL file, understand Git fingerprints, or read the formal product specification.
 
+## Visible workflow status
+
+Context Relay shows the complete workflow before it asks you to confirm anything.
+
+- Create has 4 steps; steps 1 and 2 require your confirmation. It then creates the local handoff and shows the result automatically.
+- Resume has 3 steps; step 1 requires your confirmation. It then verifies the project state and shows the safe continuation automatically.
+
+When you see **Confirmation required**, Context Relay is waiting for you and has not started the named operation. After you confirm, it changes to **Confirmation complete — Running** and states the operation that has started. A failed safety or staleness check is labeled **Stopped**.
+
 ## What is proven
 
 In the preserved fixed-input comparison, V2 recovered all three objective elements while V1 recovered none, and the target repository remained unchanged. This does not prove general receiver comprehension; receiver comprehension remains unverified. Context Relay does not make model inference faster as a proven claim.
@@ -64,6 +73,15 @@ Context Relay 适合只有粗略软件想法、会根据每次结果继续修改
 3. 检查拟定目标和下一步。明确确认后，在新任务中使用生成的交接资料。
 
 你不需要寻找会话 JSONL 文件，不需要理解 Git 指纹，也不需要阅读正式产品规格。
+
+### 可见流程状态
+
+Context Relay 会在要求确认前显示完整流程。
+
+- Create 共 4 个步骤，第 1、2 步需要你确认。之后会自动创建本地交接资料并显示结果。
+- Resume 共 3 个步骤，第 1 步需要你确认。之后会自动验证项目状态并显示安全的继续方式。
+
+看到 **需要确认** 时，代表 Context Relay 正在等待你，所说明的操作尚未开始。确认后，状态会变为 **确认部分已完成｜执行中**，并说明已经开始的操作。安全或过期检查失败时会显示 **已停止**。
 
 ### 已经证明的内容
 
