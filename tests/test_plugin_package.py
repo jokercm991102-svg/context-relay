@@ -234,10 +234,9 @@ class PluginPackageTests(TestCase):
             "Stopped",
             "Scanning will not start before confirmation.",
             "The handoff bundle will not be created before explicit confirmation.",
-            "Confirmation complete",
-            "Creating the local handoff bundle now.",
+            "Show Running. Confirmation complete. Creating the local handoff bundle now.",
             "Verification will not start before confirmation.",
-            "Verifying the project and handoff bundle state now.",
+            "Show Running. Confirmation complete. Verifying the project and handoff bundle state now.",
             "Context Relay is not continuing execution.",
         )
         for phrase in required:
@@ -260,15 +259,22 @@ class PluginPackageTests(TestCase):
             "Create has 4 steps; steps 1 and 2 require your confirmation.",
             "Resume has 3 steps; step 1 requires your confirmation.",
             "Confirmation required",
-            "Confirmation complete — Running",
+            "it changes to **Running**. Confirmation complete.",
             "Create 共 4 个步骤，第 1、2 步需要你确认。",
             "Resume 共 3 个步骤，第 1 步需要你确认。",
             "需要确认",
-            "确认部分已完成｜执行中",
+            "状态会变为 **执行中**。确认部分已完成。",
         )
         for phrase in required:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase.casefold(), readme.casefold())
+
+        for phrase in (
+            "Confirmation complete — Running",
+            "确认部分已完成｜执行中",
+        ):
+            with self.subTest(forbidden=phrase):
+                self.assertNotIn(phrase.casefold(), readme.casefold())
 
     def test_skill_contract_locks_normative_safety_semantics(self):
         skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
