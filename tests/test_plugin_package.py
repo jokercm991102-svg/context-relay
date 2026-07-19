@@ -221,6 +221,39 @@ class PluginPackageTests(TestCase):
             skill.casefold(),
         )
 
+    def test_skill_announces_visible_confirmation_workflows(self):
+        skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        required = (
+            "Create has 4 visible steps and 2 confirmation gates.",
+            "Resume has 3 visible steps and 1 confirmation gate.",
+            "Confirmation required",
+            "Running",
+            "Complete",
+            "Stopped",
+            "Scanning will not start before confirmation.",
+            "The handoff bundle will not be created before explicit confirmation.",
+            "Confirmation complete",
+            "Creating the local handoff bundle now.",
+            "Verification will not start before confirmation.",
+            "Verifying the project and handoff bundle state now.",
+            "Context Relay is not continuing execution.",
+        )
+        for phrase in required:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.casefold(), skill.casefold())
+
+        forbidden = (
+            "you can leave",
+            "leave the screen",
+            "wait elsewhere",
+            "remain on the screen",
+        )
+        for phrase in forbidden:
+            with self.subTest(forbidden=phrase):
+                self.assertNotIn(phrase.casefold(), skill.casefold())
+
     def test_skill_contract_locks_normative_safety_semantics(self):
         skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
             encoding="utf-8"
