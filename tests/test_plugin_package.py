@@ -221,6 +221,94 @@ class PluginPackageTests(TestCase):
             skill.casefold(),
         )
 
+    def test_skill_announces_visible_confirmation_workflows(self):
+        skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        required = (
+            "Create has 4 visible steps and 2 confirmation gates.",
+            "Resume has 3 visible steps and 1 confirmation gate.",
+            "Confirmation required",
+            "Running",
+            "Complete",
+            "Stopped",
+            "Scanning will not start before confirmation.",
+            "The handoff bundle will not be created before explicit confirmation.",
+            "Show Running. Confirmation complete. Creating the local handoff bundle now.",
+            "Verification will not start before confirmation.",
+            "Show Running. Confirmation complete. Verifying the project and handoff bundle state now.",
+            "Context Relay is not continuing execution.",
+        )
+        for phrase in required:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.casefold(), skill.casefold())
+
+        forbidden = (
+            "you can leave",
+            "leave the screen",
+            "wait elsewhere",
+            "remain on the screen",
+        )
+        for phrase in forbidden:
+            with self.subTest(forbidden=phrase):
+                self.assertNotIn(phrase.casefold(), skill.casefold())
+
+    def test_create_exit_results_have_explicit_terminal_statuses(self):
+        skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        create = skill.split("## Create", 1)[1].split("## Resume", 1)[0]
+
+        with self.subTest(exit_code="0"):
+            self.assertIn(
+                (
+                    "On exit `0`, show Step 4 of 4 — Complete. Rely on the "
+                    "wrapper's sanitized output."
+                ),
+                create,
+            )
+            self.assertIn(
+                "The wrapper sanitizes successful output:",
+                create,
+            )
+
+        with self.subTest(exit_code="2"):
+            self.assertIn(
+                "On exit `2`, show Stopped. Explain the single safe correction. "
+                "Context Relay is not continuing execution.",
+                create,
+            )
+
+        with self.subTest(exit_code="3"):
+            self.assertIn(
+                "On exit `3`, show Stopped. State that the result is stale and "
+                "do not hand it off. Context Relay is not continuing execution.",
+                create,
+            )
+
+    def test_readme_explains_visible_confirmation_workflow(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        required = (
+            "Create has 4 steps; steps 1 and 2 require your confirmation.",
+            "Resume has 3 steps; step 1 requires your confirmation.",
+            "Confirmation required",
+            "it changes to **Running**. Confirmation complete.",
+            "Create 共 4 个步骤，第 1、2 步需要你确认。",
+            "Resume 共 3 个步骤，第 1 步需要你确认。",
+            "需要确认",
+            "状态会变为 **执行中**。确认部分已完成。",
+        )
+        for phrase in required:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.casefold(), readme.casefold())
+
+        for phrase in (
+            "Confirmation complete — Running",
+            "确认部分已完成｜执行中",
+        ):
+            with self.subTest(forbidden=phrase):
+                self.assertNotIn(phrase.casefold(), readme.casefold())
+
     def test_skill_contract_locks_normative_safety_semantics(self):
         skill = (ROOT / "skills/context-relay/SKILL.md").read_text(
             encoding="utf-8"
@@ -339,7 +427,7 @@ class PluginPackageTests(TestCase):
             payload,
             {
                 "name": "context-relay",
-                "version": "0.1.1",
+                "version": "0.1.2",
                 "description": (
                     "Create a local, read-only Codex project handoff and compare "
                     "recorded project state before resuming."
