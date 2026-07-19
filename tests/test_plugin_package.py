@@ -394,7 +394,7 @@ class PluginPackageTests(TestCase):
             payload,
             {
                 "name": "context-relay",
-                "version": "0.1.1",
+                "version": "0.1.2",
                 "description": (
                     "Create a local, read-only Codex project handoff and compare "
                     "recorded project state before resuming."
